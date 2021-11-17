@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer>
+    let arr = [];
+    let clicked = () => {
+      let author = document.getElementById("author").value;
+      let title = document.getElementById("title").value;
+      let pages = document.getElementById("pages").value;
+      let read = document.getElementById("read").checked;
+      let add = (author, title, pages, read) => {
+        arr.push({"author": author, "title": title, "pages": pages, "read": read});
+      }
+      add(author, title, pages, read);
+      display();
+    }
+    let display = () => {
+      let display = document.getElementById("display");
+      display.innerHTML = "";
+      for(let i=0; i<arr.length; i++){
+        let div = document.createElement("div");
+        div.className = "card";
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox"
+        checkbox.id= "box"+i;
+        checkbox.checked = arr[i]["read"];
+        checkbox.setAttribute("onclick", "check("+i+")")
+        let p = document.createElement("p");
+        p.innerHTML = "Author : " +arr[i]["author"] +"<br> Book Title : " + arr[i]["title"] +"<br> No. of Pages : " + arr[i]["pages"] +"<br> Has raed? : ";
+        // div. = i;
+        p.appendChild(checkbox)
+        div.appendChild(p)
+        display.appendChild(div);
+      }
+    }
+    let check = (index) => {
+      let box = document.getElementById("box"+index);
+      if(!box.checked){
+        arr[index]["read"] = false;
+        display();
+      }else{
+        arr[index]["read"] = true;
+        display();
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="form">
+      <label for="author">Author :<br> <input type="text" id="author" placeholder="Enter Author"/></label>
+      
+      <label for="author">Title of the book:<br> <input type="text" id="title" placeholder="Enter Book Title"/></label>
+      
+      <label for="author">Number of pages:<br><input type="number" id="pages" placeholder="0"/></label>
+      
+      <label for="author">Has read? <input type="checkbox" id="read"/></label>
+      <button class="btn" onclick="clicked()">ADD</button>
+  </div>
+  <div id="display"></div>
+</body>
+</html>
